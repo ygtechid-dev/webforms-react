@@ -481,7 +481,7 @@ moment.locale('id'); // Atur lokal ke Indonesia
         console.log("Foto berhasil diunggah:", response.data.fileUrl);
         setUrlFoto(response.data.fileUrl)
         // Kirim pesan dengan foto yang diunggah
-        const sendMessageResponse = await axios.post("http://localhost:8111/sendMessageImage", {
+        const sendMessageResponse = await axios.post("http://103.196.155.202:8111/sendMessageImage", {
           // remoteJid: "120363387652160802@g.us",
       "remoteJid": "120363390123597612@g.us",
 
@@ -581,7 +581,7 @@ const headerMessage = `*${greeting},*\nizin melaporkan pertemuan di ${
   const jsonst =  formattedData.join("\n");
 
   
-    await axios.post('http://localhost:8111/sendMessage', {
+    await axios.post('http://103.196.155.202:8111/sendMessage', {
       "remoteJid": "120363390123597612@g.us",
           // remoteJid: "120363387652160802@g.us",
 
@@ -589,7 +589,7 @@ const headerMessage = `*${greeting},*\nizin melaporkan pertemuan di ${
       "text": jsonst
     }).then(async (res) => {
       console.log('response', res.data);
-      await axios.post('http://localhost:8111/sendMessage', {
+      await axios.post('http://103.196.155.202:8111/sendMessage', {
         // "remoteJid": "120363390123597612@g.us",
             remoteJid: "120363387652160802@g.us",
   
