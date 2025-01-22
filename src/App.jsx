@@ -595,7 +595,71 @@ const headerMessage = `*${greeting},*\nizin melaporkan pertemuan di ${
   
   
         "text": jsonst
-      }).then((res) => {
+      }).then(async(res) => {
+       
+        const dataKirim = formList.map((item) => ({
+          "formData": {
+            "tanggalBertemu": formattedDate, // Tanggal pertemuan yang diformat
+            "jamBertemu": item.jamBertemu, // Jam pertemuan dari item dalam formList
+            "lokasiBertemu":
+              item.lokasiBertemu +
+              " " +
+              item.kelurahanBertemu +
+              " Kec." +
+              item.kecamatanBertemu +
+              " " +
+              item.kabupatenBertemu +
+              " Provinsi " +
+              item.provinsiBertemu, // Lokasi lengkap dari item dalam formList
+            "namaLengkap": item.namaLengkap, // Nama lengkap dari formData
+            "nik": item.nik, // Data statis
+            "pekerjaan": item.pekerjaan, // Data statis
+            "jenisKelamin": item.jenisKelamin, // Data statis
+            "agama": item.agama, // Agama dari formData
+            "tanggalLahir": item.tempatLahir + ", " + "01-01-1990", // Tempat dan tanggal lahir yang diformat
+            "punyaIstri": item.punyaIstri, // Data statis
+            "jumlahPutra": item.jumlahPutra, // Data statis
+            "jumlahPutri": item.jumlahPutri, // Data statis
+            "posAnak": `${item.posAnak} dari ${item.jumlahSaudara}`, // Data stati
+            "alamatDomisili":
+              item.alamatDomisili +
+              " " +
+              item.kelurahanDomisili +
+              " Kec." +
+              item.kecamatanDomisili +
+              " " +
+              item.kabupatenDomisili +
+              " Provinsi " +
+              item.provinsiDomisili, // Data statis
+            "alamatKTP":
+              item.alamatKTP +
+              " " +
+              item.kelurahanKTP +
+              " Kec." +
+              item.kecamatanKTP +
+              " " +
+              item.kabupatenKTP +
+              " Provinsi " +
+              item.provinsiKTP, // Data statis
+            "statusPerkawinan": item.statusPerkawinan, 
+            "pendidikanTerakhir": item.pendidikanTerakhir, 
+            "statusPendidikan": item.statusPendidikan, 
+            "namaBapak": item.statusBapak === "Meninggal" ? item.namaBapak + " (Alm)" : item.namaBapak, // Perbaikan di sini
+            "namaIbu": item.statusIbu === "Meninggal" ? item.namaIbu + " (Almh)" : item.namaIbu // Perbaikan di sini
+          }
+        }));
+        
+        console.log('dataKirim:', dataKirim);
+        
+        try {
+          const response = await axios.post('http://localhost:3001/api/save-to-sheets', { formData: dataKirim });
+          console.log('response data:', response.data);
+        } catch (error) {
+          console.error('Error while saving data to Sheets:', error);
+        }
+        
+        
+        
         console.log('response', res.data);
         alert('Berhasil');
       }).catch((error) => {
